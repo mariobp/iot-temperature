@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Temperature</title>
+        <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+        <style media="screen">
+            @import url(http://fonts.googleapis.com/css?family=Dosis:200,400,500,600);
+            body,
+            html {
+                height: 100%;
+            }
+            body {
+                background: #f2f2f2;
+            }
+
+            .container {
+                width: 300px;
+                margin: 10px auto 0;
+            }
+            .de .den,
+            .de .dene,
+            .de .denem,
+            .de .deneme {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+            }
+            .de {
+                position: relative;
+                width: 240px;
+                height: 240px;
+                border-radius: 100%;
+                box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+                background-color: transparent;
+            }
+            .den {
+                position: relative;
+                width: 210px;
+                height: 210px;
+                margin: -105px 0 0 -105px;
+                border-radius: 100%;
+                box-shadow: inset 0 2px 10px rgba(0, 0, 0, .5), 0 2px 20px rgba(255, 255, 255, 1);
+                background: #df3341;
+                background: -moz-linear-gradient(left, #df3341 0%, #d4f355 50%, #61c0ec 100%);
+                background: -webkit-gradient(linear, left top, right top, color-stop(0%,#df3341), color-stop(50%,#d4f355), color-stop(100%,#61c0ec));
+                background: -webkit-linear-gradient(left, #df3341 0%,#d4f355 50%,#61c0ec 100%);
+                background: linear-gradient(to right, #df3341 0%,#d4f355 50%,#61c0ec 100%);
+                position: relative;
+            }
+            .dene {
+                width: 180px;
+                height: 180px;
+                margin: -90px 0 0 -90px;
+                border-radius: 100%;
+                box-shadow: inset 0 2px 2px rgba(255, 255, 255, .4), 0 3px 13px rgba(0, 0, 0, .85);
+                background: #f2f6f5;
+                background: -moz-linear-gradient(top, #f2f6f5 0%, #cbd5d6 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2f6f5), color-stop(100%, #cbd5d6));
+                background: -webkit-linear-gradient(top, #f2f6f5 0%, #cbd5d6 100%);
+                background: -o-linear-gradient(top, #f2f6f5 0%, #cbd5d6 100%);
+            }
+            .denem {
+                width: 160px;
+                height: 160px;
+                margin: -80px 0 0 -80px;
+                border-radius: 100%;
+                background: #cbd5d6;
+                background: -moz-linear-gradient(top, #cbd5d6 0%, #f2f6f5 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cbd5d6), color-stop(100%, #f2f6f5));
+                background: -webkit-linear-gradient(top, #cbd5d6 0%, #f2f6f5 100%);
+            }
+
+            .deneme {
+                padding: 3px 10px 0;
+                width: 120px;
+                height: 137px;
+                display: inline-block;
+                margin: -70px 0 0 -70px;
+                color: #555;
+                text-shadow: 1px 1px 1px white;
+                font-family: 'Dosis';
+                font-size: 100px;
+                font-weight: 400;
+                text-align: center;
+            }
+            .deneme span {
+                font-size: 30px;
+                font-weight: 200;
+            }
+            .deneme strong {
+                position: absolute;
+                right: 10px;
+                top: 25px;
+                font-size: 34px;
+            }
+            h1 {
+                font-family: 'Dosis';
+                text-align: center;
+                font-size: 80px;
+                font-weight: 400;
+                text-shadow: 1px 1px 1px white;
+            }
+            #f {
+                font-size: 66px;
+                text-align: center;
+                padding-top: 25px;
+            }
+
+            .ui-slider,
+            .ui-slider .slider-range-inverse,
+            .ui-slider .ui-slider-range {
+                height: 14px;
+                border-radius: 10px;
+                border-width: 0;
+            }
+
+            #slider-container {
+                width: 80%;
+                height: 80px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                position: relative;
+                top: -4%;
+                margin: 0 auto;
+                text-align: center;
+                background: #FFF;
+                border-radius: 5px;
+                padding: 35px 40px 30px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+
+            .ui-slider {
+                background-color: #1ABC9C;
+                background-image: -webkit-linear-gradient(left, #1ABC9C 0%, #F1C40F 50%, #E74C3C 100%);
+                background-image: linear-gradient(to right,#1ABC9C 0%, #F1C40F 50%, #E74C3C 100%);
+            }
+            .ui-slider * {
+                outline: none;
+            }
+            .ui-slider .slider-range-inverse {
+                background: #CCC;
+                position: absolute;
+                right: 0;
+            }
+            .ui-slider .ui-slider-range {
+                background: transparent;
+            }
+            .ui-slider .ui-slider-handle {
+                width: 28px;
+                height: 28px;
+                cursor: pointer;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+                background: #FFF;
+                top: -7px;
+                border-radius: 50%;
+                border-width: 0;
+            }
+            .ui-slider .ui-slider-handle:active {
+                box-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
+            }
+            .ui-slider .ui-slider-handle .dot {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                background: transparent;
+                overflow: hidden;
+            }
+            .ui-slider .ui-slider-handle .dot .handle-track {
+                display: block;
+                height: 18px;
+                background-color: rgb(26, 187, 156);
+                background-image: -webkit-linear-gradient(left, rgb(26, 187, 156) 0%, rgb(241, 196, 14) 50%, rgb(231, 76, 60) 100%);
+                background-image: linear-gradient(to right,rgb(26, 187, 156) 0%, rgb(241, 196, 14) 50%, rgb(231, 76, 60) 100%);
+                position: absolute;
+                padding-right: 18px;
+            }
+
+            #result {
+                width: 100px;
+                height: 100px;
+                margin: 100px auto;
+                border-radius: 50%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+        <script>
+            var colornum = 0;
+            var color = "";
+            var cont = 0;
+            $(document).ready(function() {
+                (function() {
+                    var update_handle_track_pos;
+
+                    update_handle_track_pos = function(slider, ui_handle_pos) {
+                        var handle_track_xoffset,
+                            slider_range_inverse_width;
+                        handle_track_xoffset = -((ui_handle_pos / 100) * slider.clientWidth);
+                        $(slider).find(".handle-track").css("left", handle_track_xoffset);
+                        slider_range_inverse_width = (100 - ui_handle_pos) + "%";
+                        return $(slider).find(".slider-range-inverse").css("width", slider_range_inverse_width);
+                    };
+
+                    var gradient = [
+                        [
+                            0, [26, 187, 156]
+                        ],
+                        [
+                            50, [241, 196, 14]
+                        ],
+                        [
+                          100, [231, 76, 60]
+                        ]
+                    ]
+
+                    var sliderWidth = $("#js-slider").width();
+                    $("#js-slider").slider({
+                        range: "min",
+                        max: 100,
+                        value: 28,
+                        create: function(event, ui) {
+                            var slider;
+                            slider = $(event.target);
+                            slider.find('.ui-slider-handle').append('<span class="dot"><span class="handle-track"></span></span>');
+                            slider.prepend('<div class="slider-range-inverse"></div>');
+                            slider.find(".handle-track").css("width", event.target.clientWidth);
+                            return update_handle_track_pos(event.target, $(this).slider("value"));
+                        },
+                        slide: function(event, ui) {
+                            var colorRange = []
+                            $.each(gradient, function(index, value) {
+                                if (ui.value <= value[0]) {
+                                    colorRange = [
+                                        index - 1,
+                                        index
+                                    ]
+                                    return false;
+                                }
+                            });
+
+                            //Get the two closest colors
+                            let firstcolor = gradient[colorRange[0]][1];
+                            let secondcolor = gradient[colorRange[1]][1];
+
+                            //Calculate ratio between the two closest colors
+                            let firstcolor_x = sliderWidth * (gradient[colorRange[0]][0] / 100);
+                            let secondcolor_x = sliderWidth * (gradient[colorRange[1]][0] / 100) - firstcolor_x;
+                            let slider_x = sliderWidth * (ui.value / 100) - firstcolor_x;
+                            let ratio = slider_x / secondcolor_x
+
+                            //Get the color with pickHex(thx, less.js's mix function!)
+                            let result = pickHex(secondcolor, firstcolor, ratio);
+                            colornum = ui.value;
+                            color = 'rgb(' + result.join() + ')';
+                            $('#result').css("background-color", 'rgb(' + result.join() + ')');
+                            return update_handle_track_pos(event.target, ui.value);
+                        }
+                    });
+
+                }).call(this);
+            });
+
+            function pickHex(color1, color2, weight) {
+                var p = weight;
+                var w = p * 2 - 1;
+                var w1 = (w / 1 + 1) / 2;
+                var w2 = 1 - w1;
+                var rgb = [
+                    Math.round(color1[0] * w1 + color2[0] * w2),
+                    Math.round(color1[1] * w1 + color2[1] * w2),
+                    Math.round(color1[2] * w1 + color2[2] * w2)
+                ];
+                return rgb;
+            }
+
+            var socket = io('http://localhost:8010');
+            socket.on('news', function(data) {
+                console.log(colornum);
+                console.log(color);
+                let c = document.getElementById("c");
+                c.textContent = data.c;
+                if(data.c == colornum){
+                  c.style.color = color;
+                }
+                let d = document.getElementById("f");
+                d.textContent = data.f;
+
+                //socket.emit('my other event', { my: 'data' });
+            });
+        </script>
+        <h1>Temperatura</h1>
+        <div id="slider-container">
+            <div id="js-slider"></div>
+        </div>
+        <div class="container">
+            <div class="de">
+                <div class="den">
+                    <div class="dene">
+                        <div class="denem">
+                            <div class="deneme">
+                                <div id="c">
+                                    29
+                                </div>
+                                <strong>&deg;</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="de">
+                <div class="den">
+                    <div class="dene">
+                        <div class="denem">
+                            <div class="deneme">
+                                <div id="f">
+                                    29
+                                </div>
+                                <strong>&deg;</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
